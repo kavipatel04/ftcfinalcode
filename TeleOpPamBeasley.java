@@ -13,18 +13,18 @@ public class TeleOpPamBeasley extends OpMode {
     public DcMotor rightBack;
     public DcMotor lift;
     public Servo lights;
-    //public Servo harvester;
+    public Servo harvester;
     //public Servo teammarker;
-    //public Servo harvesterdown;
+    public Servo harvesterdown;
     public void init()  {
         rightBack = hardwareMap.dcMotor.get("rightBack");
         rightFront = hardwareMap.dcMotor.get("rightFront");
         leftBack = hardwareMap.dcMotor.get("leftBack");
         leftFront = hardwareMap.dcMotor.get("leftFront");
         lights = hardwareMap.servo.get("lights");
-        //harvester = hardwareMap.servo.get("harvester");
+        harvester = hardwareMap.servo.get("harvester");
         //teammarker = hardwareMap.servo.get("teammarker");
-        //harvesterdown = hardwareMap.servo.get("harvesterdown");
+        harvesterdown = hardwareMap.servo.get("harvesterdown");
         lift = hardwareMap.dcMotor.get("lift");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -44,6 +44,8 @@ public class TeleOpPamBeasley extends OpMode {
         boolean LeftX = gamepad1.left_bumper;
         boolean Agodown = gamepad2.a;
         boolean Ygoup = gamepad2.y;
+        boolean dpadgoDown = gampad2.dpad_down;
+        boolean Bspitout = gamepad2.b;
         // Adds data to the driver station
         telemetry.addData("The Left Joystick 'Y' Value", leftYvalue);
         telemetry.addData("The Right Joystick 'Y' Value", rightYvalue);
@@ -67,6 +69,10 @@ public class TeleOpPamBeasley extends OpMode {
         }
         if (Ygoup == true) {
             lift.setPower(-0.8);
+        }
+        //when dpad's down is pressed, the harvestor that goes down will go down 120 degrees
+        if (dpadgoDown == true) {
+            harvestordown.setPosition(180);
         }
         //idle
         if (leftYvalue == 0 && rightYvalue == 0) {
